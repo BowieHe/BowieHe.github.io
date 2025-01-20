@@ -1,716 +1,245 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
-  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"bowiehe.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="前端&#x2F;后端&#x2F;大数据&#x2F;AI开发,记录日常所思所想,阅读感悟">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Bowie - 小何的岛🏝️</title><meta name="author" content="Bowie"><meta name="copyright" content="Bowie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前端&#x2F;后端&#x2F;大数据&#x2F;AI开发,记录日常所思所想,阅读感悟">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bowie">
 <meta property="og:url" content="https://bowiehe.github.io/index.html">
 <meta property="og:site_name" content="Bowie">
 <meta property="og:description" content="前端&#x2F;后端&#x2F;大数据&#x2F;AI开发,记录日常所思所想,阅读感悟">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bowiehe.github.io/images/IMG_20221225_205912.jpg">
 <meta property="article:author" content="Bowie">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bowiehe.github.io/images/IMG_20221225_205912.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://bowiehe.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-
-<link rel="canonical" href="https://bowiehe.github.io/">
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Bowie</title>
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
   
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
 
-
-
-
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Bowie</h1>
-      <i class="logo-line"></i>
-    </a>
-      <p class="site-subtitle" itemprop="description">小何的岛🏝️</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="搜索" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-  </ul>
-</nav>
-
-
-
-
-</header>
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
         
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
   
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Bowie',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/images/IMG_0469.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Bowie</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Bowie</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/" title="回头看, 好事不怕晚, 最终都还是会一起的"><img class="post-bg" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/%E8%93%A6%E7%84%B6%E5%9B%9E%E9%A6%96-%E6%B5%B7%E6%8A%A5.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="回头看, 好事不怕晚, 最终都还是会一起的"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/" title="回头看, 好事不怕晚, 最终都还是会一起的">回头看, 好事不怕晚, 最终都还是会一起的</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-01-02T04:06:04.000Z" title="发表于 2025-01-02 12:06:04">2025-01-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%84%9F%E6%83%B3/">感想</a></span></div><div class="content">电影《蓦然回首》观后感</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/" title="学会掌握信息差,也要学会行动起来"><img class="post-bg" src="https://pic.qtfm.cn/device/a20ba2ac15174858bc41aa21c16e416f/1656916891596_TuBBdzQir.jpeg%21400" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="学会掌握信息差,也要学会行动起来"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/" title="学会掌握信息差,也要学会行动起来">学会掌握信息差,也要学会行动起来</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-12-30T16:00:00.000Z" title="发表于 2024-12-31 00:00:00">2024-12-31</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%84%9F%E6%83%B3/">感想</a></span></div><div class="content">知行小酒馆一期对话付鹏老师听后有感</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/" title="Hexo GitHub Pages 部署流程"><img class="post-bg" src="https://anne416wu.github.io/gallery/thumbnails/hexo-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo GitHub Pages 部署流程"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/" title="Hexo GitHub Pages 部署流程">Hexo GitHub Pages 部署流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-12-25T16:00:00.000Z" title="发表于 2024-12-26 00:00:00">2024-12-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="content">Hexo 配置教程</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/" title="生活中有很多无奈,但依旧值得一试"><img class="post-bg" src="https://img1.baidu.com/it/u=262725778,1977969696&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=800&amp;h=1067" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生活中有很多无奈,但依旧值得一试"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/" title="生活中有很多无奈,但依旧值得一试">生活中有很多无奈,但依旧值得一试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-04T16:00:00.000Z" title="发表于 2024-08-05 00:00:00">2024-08-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%84%9F%E6%83%B3/">感想</a></span></div><div class="content">读完《长安的荔枝》有感</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/" title="该做的事还得做,不能找理由哦"><img class="post-bg" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/cover_sen_qi_book_store.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="该做的事还得做,不能找理由哦"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/" title="该做的事还得做,不能找理由哦">该做的事还得做,不能找理由哦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-07-17T16:00:00.000Z" title="发表于 2023-07-18 00:00:00">2023-07-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%84%9F%E6%83%B3/">感想</a></span></div><div class="content">读完《在森崎书店的日子》有感</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Bowie</div><div class="author-info-description">前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/BowieHe"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来我的岛上和我一起冲浪</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/" title="回头看, 好事不怕晚, 最终都还是会一起的"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/%E8%93%A6%E7%84%B6%E5%9B%9E%E9%A6%96-%E6%B5%B7%E6%8A%A5.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="回头看, 好事不怕晚, 最终都还是会一起的"/></a><div class="content"><a class="title" href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/" title="回头看, 好事不怕晚, 最终都还是会一起的">回头看, 好事不怕晚, 最终都还是会一起的</a><time datetime="2025-01-02T04:06:04.000Z" title="发表于 2025-01-02 12:06:04">2025-01-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/" title="学会掌握信息差,也要学会行动起来"><img src="https://pic.qtfm.cn/device/a20ba2ac15174858bc41aa21c16e416f/1656916891596_TuBBdzQir.jpeg%21400" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="学会掌握信息差,也要学会行动起来"/></a><div class="content"><a class="title" href="/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/" title="学会掌握信息差,也要学会行动起来">学会掌握信息差,也要学会行动起来</a><time datetime="2024-12-30T16:00:00.000Z" title="发表于 2024-12-31 00:00:00">2024-12-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/" title="Hexo GitHub Pages 部署流程"><img src="https://anne416wu.github.io/gallery/thumbnails/hexo-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo GitHub Pages 部署流程"/></a><div class="content"><a class="title" href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/" title="Hexo GitHub Pages 部署流程">Hexo GitHub Pages 部署流程</a><time datetime="2024-12-25T16:00:00.000Z" title="发表于 2024-12-26 00:00:00">2024-12-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/" title="生活中有很多无奈,但依旧值得一试"><img src="https://img1.baidu.com/it/u=262725778,1977969696&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=800&amp;h=1067" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生活中有很多无奈,但依旧值得一试"/></a><div class="content"><a class="title" href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/" title="生活中有很多无奈,但依旧值得一试">生活中有很多无奈,但依旧值得一试</a><time datetime="2024-08-04T16:00:00.000Z" title="发表于 2024-08-05 00:00:00">2024-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/" title="该做的事还得做,不能找理由哦"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/cover_sen_qi_book_store.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="该做的事还得做,不能找理由哦"/></a><div class="content"><a class="title" href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/" title="该做的事还得做,不能找理由哦">该做的事还得做,不能找理由哦</a><time datetime="2023-07-17T16:00:00.000Z" title="发表于 2023-07-18 00:00:00">2023-07-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%84%9F%E6%83%B3/"><span class="card-category-list-name">感想</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">教程</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Hexo/" style="font-size: 1.15em; color: rgb(171, 97, 165);">Hexo</a><a href="/tags/GitHub-Pages/" style="font-size: 1.15em; color: rgb(198, 153, 134);">GitHub Pages</a><a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 1.15em; color: rgb(155, 50, 149);">播客</a><a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 1.15em; color: rgb(50, 100, 84);">电影</a><a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 1.45em; color: rgb(50, 185, 86);">读书笔记</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/01/">
+            <span class="card-archive-list-date">
+              一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
         </li>
-        <li class="sidebar-nav-overview">
-          站点概览
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/12/">
+            <span class="card-archive-list-date">
+              十二月 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
         </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Bowie"
-      src="/images/avatar.png">
-  <p class="site-author-name" itemprop="name">Bowie</p>
-  <div class="site-description" itemprop="description">前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟</div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">5</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">标签</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/BowieHe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BowieHe" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:hbw234@outlook.com" title="E-Mail → mailto:hbw234@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://twitter.com/BowieHe" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;BowieHe" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
-      </span>
-  </div>
-
-        </div>
-      </div>
-    </div>
-
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bowiehe.github.io/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Bowie">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bowie">
-      <meta itemprop="description" content="前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Bowie">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/" class="post-title-link" itemprop="url">回头看, 好事不怕晚, 最终都还是会一起的</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
       
-
-      <time title="创建时间：2025-01-02 12:06:04 / 修改时间：12:12:48" itemprop="dateCreated datePublished" datetime="2025-01-02T12:06:04+08:00">2025-01-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>《蓦然回首》观后感</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/02/%E5%9B%9E%E5%A4%B4%E7%9C%8B-%E5%A5%BD%E4%BA%8B%E4%B8%8D%E6%80%95%E6%99%9A-%E6%9C%80%E7%BB%88%E9%83%BD%E8%BF%98%E6%98%AF%E4%BC%9A%E4%B8%80%E8%B5%B7%E7%9A%84/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
       
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/07/">
+            <span class="card-archive-list-date">
+              七月 2023
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
       
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bowiehe.github.io/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Bowie">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bowie">
-      <meta itemprop="description" content="前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Bowie">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/31/%E5%90%AC%E5%AE%8C%E7%9F%A5%E8%A1%8C%E5%B0%8F%E9%85%92%E9%A6%86%E7%9A%84%3C%E5%AF%B9%E8%AF%9D%E4%BB%98%E9%B9%8F%3E/" class="post-title-link" itemprop="url">学会掌握信息差,也要学会行动起来</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-31 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-31T00:00:00+08:00">2024-12-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-10 16:30:59" itemprop="dateModified" datetime="2025-01-10T16:30:59+08:00">2025-01-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>又到了一年的年终, 还是挺开心在最后的几天听到了这一期知行小酒馆的播客, 而且听完也是感触良多.</p>
-<p>📌 推荐收听<br>如果有兴趣可以结合他们另外的两期播客, 《对话温义飞》和《对话成庆》, 这几位都是很厉害的前辈, 也是从中获益良多</p>
-<p>在这一期播客之前, 我就对付鹏老师几个月前在凤凰湾区财经论坛上面的一番讲话, 以及前段时间刷屏的 HSBC 的内部分享文章给种草.</p>
-<p>在某一方面很佩服这位经济学家在现在的这种舆论大环境的背景之下还是依旧愿意去站在一个“正确”的视角和角度去谈论现如今的国内经济现状; 另一方面也对于他在财经论坛上表述的观点非常直接和简洁的表达出了我对于内卷的看法和“螺旋式循环”</p>
-<blockquote>
-<p>企业降本裁员增效会导致员工进一步收缩，员工进一步收缩会导致内部有效需求不足，内需不足导致企业继续恶性竞争，继续降本裁员增效，居民部门继续收缩。这个螺旋循环一旦形成，打破非常难。</p>
-</blockquote>
-<p>回到这个节目, 里面付鹏老师提出了几个观点, 也是让我觉得获益匪浅</p>
-<ol>
-<li>很多的赚钱途径其实本质上都是通过信息差来赚钱.</li>
-<li>在新兴市场中寻找套利的机会, 在成熟的市场中寻找差异化的路线</li>
-<li>提升自己, 创造出自己的壁垒, 成为行业中的信息差</li>
-<li>大家需要开始追求负债端的回报, 而不是和从前一样继续追求资产端的回报</li>
-<li>在努力面前, 选择的重要性大于汗水的付出; 很多事情的开始成本很低, 并没有大家想象的那么高</li>
-</ol>
-<h2 id="信息差"><a href="#信息差" class="headerlink" title="信息差"></a>信息差</h2><p>在节目中就谈到付鹏老师在读书的时候, 就靠二手车的南北方市价的差异: 因为北方开的车比较差, 所以豪车会便宜, 皮卡就回贵; 相反因为南方经济比较发达, 所以南边的豪车卖的好, 皮卡卖的差. 因此可以把南方的皮卡拉到北方卖, 然后北方的豪车拉到南方来卖.</p>
-<p>在开始的时候可以是自己一个人开车往返, 赚小钱. 在这个体系成熟之后就可以雇佣一些人来帮你开车, 把车运过来 (甚至是不是可以把这个开车的行为和租车再挂钩, 这样开过来的人力成本还可以更少一些). 但是这种信息差在当年的时代还是比较可行, 因为二手车应用和网络并不发达, 很多的人 (老钱) 并不会使用这些新工具, 更多的还是依赖于自家门口的二手车行</p>
-<p>(这里让我想到在 2020 年的时候我遇到一个做量化交易的人, 他和我说他最喜欢世界杯和欧冠的一点是, 他可以找到各种不同的博彩网站, 通过计算各个网站之间赔率的差值, 来实现自己不管投哪边赢都一定可以赢钱的结果)</p>
-<p>在今年的早些时候, 和朋友聊天的时候就聊到 OpenAI 的 KEY 的价格, 那些第三方的人是怎么做到还可以以 6-7 折的价格出售给我们个人, 而且可以是少量的出售. 那这些人是做慈善吗? 还是单纯的黑卡生意?</p>
-<p>显然并不都是, 这些人类似 API 承包商, 和 OpenAI 谈合作条件, 我每年需要买你 XX 量的 API KEY 的用量, 那么你给我一些折扣. 这里的折扣可能类似云厂商和一些企业谈合作的时候, 最低甚至可以给到 2, 3 折. 那如果有能力谈到 2 折的价格买下来, 几乎就是纯赚 200%的利润 (当然这也是一种高回报高收益). 从那之后我就意识到, 作为一个只会利用 KEY 来写应用, 和广大的卷王码农相比, 自己丝毫没有任何的可比性, 不管是从我的 commit 还是项目的数量来说. 最终想要一本万利的去躺着赚, 还是得去寻找到一个信息差.</p>
-<p>当然, 在如今这个互联网时代, 由于很多的信息组件透明化, 像之前例子中的信息差也逐渐被抹平, 信息差的获取难度越来越高, 但是如果有一个, 请多珍惜. 这可能是为数不多可以实现原始积累的机会</p>
-<p>毕竟, 在没人挖金子的时候, 你需要去卖金子; 但是大家都挖金子了, 那你就可以考虑去卖铲子了</p>
-<h2 id="市场机会"><a href="#市场机会" class="headerlink" title="市场机会"></a>市场机会</h2><p>现在的市场每天都在日新月异的变化. 尤其是在有了 LLM 的助力之后, 每天的新闻和应用更新的速度相比之前都在指数级的增长. 但是即使如此, 在 LLM 领域, 也没有什么专家. 当然有许多的 DS 和算法在完善和优化模型, 但是在 LLM 怎么市场应用化的方面大家都依旧还在一个摸索的阶段.</p>
-<p>在一开始的时候 OpenAI 通过文本对话的方式让我们使用和感受到了 AI 的先进生产力, 在你不停的使用下, 非常的惊艳, 会感叹怎么会有这么厉害和像是不属于这个时代的人工智能. 一下子从以前“智障”的语音助手到了真正的能理解自然语言的“智能”助手.</p>
-<p>但是, 这种对话框的交互方式一定好吗? 我不觉得, 至少对于很多老年人, 或者不会打字的人来说并不友好; 那么是不是加上语音就完美了呢? 也不一定, 语音的输入方式还是太慢了, 而且在有旁人的情况下用语音来进行交互有回有一种打扰到其他人的“侵犯”感.</p>
-<p>如果类比到 IDE 上面, 至少我觉得应该有像 <code>cursor</code> 这样体验的产品才可以算的上优秀.</p>
-<ol>
-<li>可以在一些适当的场合来做到信息的补充 (代码补全, 并且去尝试猜测你的意图)</li>
-<li>比较方便和快速的提供一些文本或者素材让他来处理 (<code>@代码文件</code> 并提问)</li>
-<li>自动执行, 比如自动根据我的日历打车 (composer 功能)</li>
-</ol>
-<p>上述的几种条件虽然在当下仍旧有不可消除的困境: Token 的消耗过于巨大 . 历史数据的丢失和幻觉问题.<br>针对上面的问题虽然很多在被解决中, 但其中一定蕴含着一些信息差. 这种信息差是一个新领域带来的, 同时我会认为因为参与其中更多的是工程师而非实际的运营或者销售, 因此大家看问题的角度也会更加的不同.</p>
-<p><strong>与之相对的是成熟市场:</strong></p>
-<p>在一个 App 开发极度内卷的市场, 尤其是各大头部互联网公司, 一个个下场都在做各种大而全的应用. 之前听说 QQ 甚至在里面塞了一个原神. 那么这时候再去做一个信息的整合平台其实无异于去撞南墙. 先不谈其中的信息源在各大 App 中都是闭源, 无法获取. 另一方面因为你是外部系统, 天然的对于其他 App 的集成没有其他应用那么丝滑, 那对于用户的体验必然会下降一个档次.</p>
-<p>那这个时候就不应该去考虑如何与这些头部应用相抗衡, 而是从自身需求出发. 我们都是这些大型 App 的使用者, 在使用过程中我们也会发现自己的一些特殊需求. 比如我不需要 QQ 的各种社交功能, 我只想保留简单的聊天和文件关系, 那你可以使用 TIMS; 我只是想安安静静听播客, 那你可以使用小宇宙或者 Apple Podcast…</p>
-<p>诸如此类的小需求点非常多, 而这些小需求点也是大的头部厂商不一定愿意去做, 比如微信每一次更新功能, 都会影响十几亿的用户, 每一次应用崩坏和 BUG 都会直接上热搜. 这使得他们在原来的屎山代码上做大的系统更新变得非常谨慎; 但对于小而美的应用反而是一个契机.</p>
-<p>很好的例子是 <strong>小猫补光灯</strong>, 不仅捕捉到了自拍的时候需要补光卡的需求, 而且同时依靠 cursor 快速开发也给自己带来了一大波的流量. 而这些在大型互联网产品中从立项到最后的落地往往中间要走好几个月的流程, 而且更多的是在立项的过程中就被否决和枪毙了</p>
-<h2 id="提升自己"><a href="#提升自己" class="headerlink" title="提升自己"></a>提升自己</h2><p>这也是我最近在思考的问题, 如何提升自己成为一个行业的壁垒</p>
-<p>在这个 AI 浪潮下, AI 的普及抹平了很多人对于一些行业的认知壁垒的差距, 使得进入的门槛变得特别低. 比如软件开发, 随着 cursor 的问世, 像花生就可以在学习了一些 Python 之后就可以做出小猫补光灯这样的 App. 而且随着越来越多的人知道小猫补光灯, 现在去 App Store 搜索小猫补光灯, 甚至有一大堆的同款. 这有很大程度是因为开发的门槛降低了导致</p>
-<p>我自己是从 MA 跨行业来到了汽车行业, 即使在车企内都呆了快两年. 我还是时不时会遇到一些事情去感叹, <code>原来大数据的技术还是有门槛的</code> 和 <code>大数据真的是谁做都能做</code>.</p>
-<p>前者是看到一些所谓的 DE 甚至连基本的 Spark 调优都不明白, 账单几十万的跑;</p>
-<p>后者是看到各种新技术的兴起, 而自己只是专注于搭建数仓和 ETL 好像又不是什么壁垒, 至少很多时候可以被 ChatGPT 给替代了</p>
-<p>但是前段时间一次机缘巧合的面试让我知道了我在目前企业内部的护城河:</p>
-<ol>
-<li>外企对于英语交流的能力非常看重, 口语不过关就是不行, 这一点可以排除 70-80%的开发</li>
-<li>由于很多都是小团队, 因此非常考验个人的单兵作战能力. 因为我后来自己研究了一些 k 8 s 和前端相关, 所以目前可以说是全干</li>
-<li>MA 的积累让我在车企中想要开发一个 MA 的数仓和平台变得非常的容易</li>
-</ol>
-<p>虽然最后因为一些原因没有去到这个岗位, 但是也让我开始思考我自己的护城河是什么? 相比一些开发我会更愿意去了解业务和商业的价值以及机会; 更加愿意从用户和产品的角度思考应该怎么设计一个功能; 更多的意愿去交流和互换想法</p>
-<p>以上都是我自己总结出来的观点, 但是具体怎么落地才能让这个护城河建立起来, 可能是我接下来这一年需要考虑的问题</p>
-<h2 id="考虑更多的负债端的回报而不是投资端回报"><a href="#考虑更多的负债端的回报而不是投资端回报" class="headerlink" title="考虑更多的负债端的回报而不是投资端回报"></a>考虑更多的负债端的回报而不是投资端回报</h2><p>在今年听了很多的投资理财类播客之后, 我逐渐意识到一件事情.</p>
-<p>在今年之前我会在一些时刻进行一些投资, 并且对于投资年回报率并没有一个很高的概念. 比如 20 年买入的基金和 23 年买的纳指, 24 年初买的黄金和沪指. 这些从最后的结局来看都获得了不少了回报率, 但是因为我风险承担能力较差, 因此投入的本金很少, 几乎就是属于赚了个零食钱的样子.</p>
-<p>当时因为都是买入了低点, 且不愿意打理, 因此赚了多了就会觉得厉害, 赚钱就要赚这种大钱; 亏的多了也会割肉, 觉得人不要贪心. 因此总的算下来可能勉强实现了年收益率 3%. 也是这种要赚大钱的思想明显在这一两年都得到了大程度的不被认可, 各种的资方都开始降低投资的比例; 投资的项目也从 5 年 IPO 上市变成了一些稳健的行业.</p>
-<p>此前我一直没考虑买房, 因为我觉得买房的成本不如自己一直租房. 而且上海一些房子的租售比可能要租 100 年才能回本. 可是考虑到我买了个房子然后出租, 等于我拥有了一套房子, 而且同时每个月能从中获取一部分的回报. 那么核算下来以房养房的路数也还是行得通</p>
-<h2 id="选择的重要性"><a href="#选择的重要性" class="headerlink" title="选择的重要性"></a>选择的重要性</h2><p>在前面提到的市场机会和提升自己的部分其实背后隐含的一个条件都是我们要去做出争取的选择, 因为一个正确的选择和方向可以使我们花更少的努力来达到自己想要的结果.</p>
-<p>比如我如果当初没有选择离开 CL, 那么我现在可能和我的诸多同事一样不仅几乎一年没收入, 而且公司也要面临倒闭;</p>
-<p>如果我当初选择的是前端开发而不是后端开发, 那么我现在做应用可能会更加顺手, 也更容易去到一个应用开发的公司入职, 也不会因为现在要开发应用而来回的切换框架, 反复的重构代码</p>
-<p>和我的一个朋友, 我们在两年前就约定要去一起做播客, 但是中间断断续续, 至今我们也没有发出过一个完整的音频. 我们总是缺少了很多的动力去做. 但是我们忽视了开始的力量</p>
-<p>很多事情可能正如 <code>纵横四海</code> 中习惯的力量提到的, 每天都做一点, 慢慢的就会养成了习惯. 而且你不做, 一直去想象这个事情有多么的困难, 最后的结果就是你在一年之后依旧在原地踏步. 但是你如果迈出了第一步, 第二步, 慢慢的第三第四步也出来了, 回顾过去, 可能你已经距离当时的你进步很多了.</p>
-<p>而且很多时候也正如付鹏老师说的那样, 很多事情的成本其实很低. 而且很多时候我们虽然自己口里说我要做什么, 我想做什么. 但是实际落地执行的时候又反悔了, 或者执行力特别低.</p>
-<p>因为在我们的潜意识中, 至少我, 在很多的时候都想去赚那些看起来特别体面的钱. 也不愿意亲自下场来做自媒体或者宣传, 很多的时候是因为把很多的盈利点和到处贴狗皮膏药的人关联了起来. 但是要净化环境, 不得不自己下场来表达来宣传自己认可的正义.</p>
-<p>这时候很感谢 <code>携隐</code> 说的一句话, 这些可能到最后都只是一个技能. 我们从小会有很多的意思, 比如我就是不擅长赚钱, 那我就不去想办法赚钱好了, 我就埋头精进我的技术也可以赚到. 但是转念一想, 如果这个赚钱只是一个技能呢? 只是一个你迈向另一个领域的敲门砖, 那么这件事情我就没那么抵触去做了</p>
-<p>还有另外一个是付鹏老师在节目中说的, 很多人会觉得你去做各种领域, 是不是因为你的本职工作不赚钱, 所以你才会这么热衷于做其他的平台等等. 但是其实恰恰相反, 我现在会因为投入产出比的高低来决定是不是要做这件事情.比如我现在写了这篇文章, 那么对我来说复制到微信的公众号就只有一个复制粘贴的功夫, 可是这样就让我整个人参与在了个人 IP 的搭建和内容运营的时代中.</p>
-<p>也希望自己在 25 年中可以做到这些事情</p>
-<p>共勉, 祝大家 25 年事事顺利, 每天都可以开心</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bowiehe.github.io/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Bowie">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bowie">
-      <meta itemprop="description" content="前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Bowie">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">Hexo GitHub Pages部署流程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-12-26 00:00:00 / 修改时间：16:15:59" itemprop="dateCreated datePublished" datetime="2024-12-26T00:00:00+08:00">2024-12-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最近可能是因为 AI 时代的崛起, 越来越多的个人开发者开始在这个市场上崭露头角. 同时也在这些个人开发者身上看到了很多充满个人气息的博客信息. 因此也打算趁这个机会吧以前弄到一半荒废的 GitHub Pages 页面重新升级一遍. 同时发现一两年前大家强推的 <code>Hugo</code> 好像今年很少提及, 搜索结果关联的都是 <code>Hexo</code>.</p>
-<p>因此在这里记录一下 Hexo 搭建的过程中碰到的问题, 以及一些简单的教程</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/26/Hexo-GitHub-Pages%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bowiehe.github.io/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Bowie">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bowie">
-      <meta itemprop="description" content="前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Bowie">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/" class="post-title-link" itemprop="url">读完《长安的荔枝》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-05 00:00:00" itemprop="dateCreated datePublished" datetime="2024-08-05T00:00:00+08:00">2024-08-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-26 15:56:31" itemprop="dateModified" datetime="2024-12-26T15:56:31+08:00">2024-12-26</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>刚刚扫完了《长安的荔枝》这本书。</p>
-<p>因为在前一刻知道自己按照反馈面试很不错的一个机会自己查到不再考虑了。虽然前段时间面试的几个岗位不是经历不符合就是自己的技术深度不够，被拒绝的也都有点习惯了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/08/05/%E8%AF%BB%E5%AE%8C%E3%80%8A%E9%95%BF%E5%AE%89%E7%9A%84%E8%8D%94%E6%9E%9D%E3%80%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bowiehe.github.io/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Bowie">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bowie">
-      <meta itemprop="description" content="前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Bowie">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/" class="post-title-link" itemprop="url">读完《在森崎书店的日子》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-07-18 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-18T00:00:00+08:00">2023-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-26 15:56:44" itemprop="dateModified" datetime="2024-12-26T15:56:44+08:00">2024-12-26</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最近一周都没什么心情，就打算周末的时候去外面转一圈，换个心情，也换个环境好好思考一下最近阻塞自己，让自己一直没法好好睡觉的原因是什么。</p>
-<p>原本是租了一辆车打算自驾去连云港转转。但是因为上一周整周都是一整晚的睡不着觉，实在害怕自己半路车开着开着人没了。正好碰上苏州上海的地铁通了，就趁自己还在嘉定住，坐地铁去苏州转一圈看看。</p>
-<p>这才有了在咖啡馆里一口气看完这一本书的事情。但也是看完了这一本书，让内心获得了一丝宁静</p>
-<p>（但是这个故事本身还是挺老套的，更像是讲了主人公的日常故事，可能很多人会并不吃这一套）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/07/18/%E8%AF%BB%E5%AE%8C%E3%80%8A%E5%9C%A8%E6%A3%AE%E5%B4%8E%E4%B9%A6%E5%BA%97%E7%9A%84%E6%97%A5%E5%AD%90%E3%80%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2025</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">BowieHe</span>
-  </div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-<div class="theme-info">
-  <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.2k字</span>
-</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
-
-    </div>
-  </footer>
-
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
-
-  
-
-
-
-
-
-
-  
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-</body>
-</html>
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">11.2k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-01-20T03:28:13.937Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/images/IMG_0469.jpeg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Bowie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["今日事&#44;今日畢","一个左撇子,发量还算健康","一个虚假的全栈程序员","ENTP-T"])
+  } else {
+    document.getElementById("subtitle").textContent = "今日事&#44;今日畢"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
