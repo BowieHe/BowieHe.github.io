@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LangGraph vs. LangChain：怎么选 | 小何的岛🏝️</title><meta name="author" content="Bowie"><meta name="copyright" content="Bowie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Agent开发过程中LangChain和LangGraph的选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LangGraph vs. LangChain：怎么选">
+<meta property="og:url" content="https://bowiehe.github.io/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/index.html">
+<meta property="og:site_name" content="小何的岛🏝️">
+<meta property="og:description" content="Agent开发过程中LangChain和LangGraph的选择">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png">
+<meta property="article:published_time" content="2025-08-05T05:56:04.000Z">
+<meta property="article:modified_time" content="2025-08-05T05:56:04.000Z">
+<meta property="article:author" content="Bowie">
+<meta property="article:tag" content="LangGraph">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "LangGraph vs. LangChain：怎么选",
+  "url": "https://bowiehe.github.io/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/",
+  "image": "https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png",
+  "datePublished": "2025-08-05T05:56:04.000Z",
+  "dateModified": "2025-08-05T05:56:04.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Bowie",
+      "url": "https://bowiehe.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://bowiehe.github.io/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LangGraph vs. LangChain：怎么选',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/universe.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://open.spotify.com/user/18a03f4g3srgo2hvmazmqid7k"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://movie.douban.com/people/84281410/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">小何的岛🏝️</span></a><a class="nav-page-title" href="/"><span class="site-name">LangGraph vs. LangChain：怎么选</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://open.spotify.com/user/18a03f4g3srgo2hvmazmqid7k"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://movie.douban.com/people/84281410/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">LangGraph vs. LangChain：怎么选</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-05T05:56:04.000Z" title="发表于 2025-08-05 13:56:04">2025-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-05T05:56:04.000Z" title="更新于 2025-08-05 13:56:04">2025-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>最近，我正在进行一个有趣的项目：将我之前用 NodeJS 开发的 Agent 框架，迁移到更适合桌面应用的 Electron 上。在这个过程中，一个经典的问题浮现在我脑海里：</p>
+<blockquote>
+<p><em>在当下的 AI Agent 浪潮中，到底哪款框架才是最合适的？它们各自的优缺点是什么？尤其是在 LangChain 和新秀 LangGraph 之间，我该如何抉择？</em></p>
+</blockquote>
+<p>带着这个疑问，我做了一番调研。市面上有不少小型框架，但要论规模和成熟度，除了 LangChain 和 LangGraph，另外两个重量级选手就是 LlamaIndex 和微软的 AutoGen。</p>
+<p>在正式对决之前，我们先快速过一下这两位“备选”选手，以及为什么它们没有进入我的最终选择。</p>
+<h3 id="初步筛选：为什么不是-LlamaIndex-和-AutoGen？"><a href="#初步筛选：为什么不是-LlamaIndex-和-AutoGen？" class="headerlink" title="初步筛选：为什么不是 LlamaIndex 和 AutoGen？"></a>初步筛选：为什么不是 LlamaIndex 和 AutoGen？</h3><h4 id="LlamaIndex"><a href="#LlamaIndex" class="headerlink" title="LlamaIndex"></a>LlamaIndex</h4><ul>
+<li><strong>核心定位：</strong> 专注于数据处理，特别是数据的摄取、索引和检索。如果你的 Agent 核心任务是围绕海量非结构化数据进行问答（RAG），LlamaIndex 无疑是顶级的选择。</li>
+<li><strong>Agent 能力：</strong> 它也提供了基于检索和工具的 Agent 框架，但其核心优势依旧牢牢地扎根在 RAG 上。</li>
+<li><strong>适用场景：</strong> 当你的 Agent 需要一个极其庞大且复杂的知识库，并要求极致的检索优化时，LlamaIndex 会大放异彩。</li>
+</ul>
+<h4 id="AutoGen-Microsoft"><a href="#AutoGen-Microsoft" class="headerlink" title="AutoGen (Microsoft)"></a>AutoGen (Microsoft)</h4><ul>
+<li><strong>核心定位：</strong> 专注于构建“多代理协作系统”。它允许你创建多个拥有不同角色、能力和目标的 Agent，让它们通过对话与合作来解决复杂任务。</li>
+<li><strong>优点：</strong> 强大的多代理协作机制、自动化的对话流、支持人类随时介入指导。它非常适合需要任务分解、角色扮演、代码生成与执行等复杂场景。</li>
+</ul>
+<p><strong>我的选择：</strong> AutoGen 对 Python 的依赖较重，考虑到我希望尽可能保持纯 NodeJS 技术栈，它首先被排除了。而 LlamaIndex 的核心优势在于 RAG，我的项目重心则更多地放在 Agent 的决策与执行流上。因此，这两位优秀的选手也被我暂时搁置。</p>
+<p>现在，舞台中央只剩下两位主角：<strong>LangChain</strong> 和 <strong>LangGraph</strong>。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png" alt="graph_vs_chain"></h2><h3 id="主角登场：LangGraph-与-LangChain-的终极对决"><a href="#主角登场：LangGraph-与-LangChain-的终极对决" class="headerlink" title="主角登场：LangGraph 与 LangChain 的终极对决"></a>主角登场：LangGraph 与 LangChain 的终极对决</h3><p>最早，LangChain 是 Agent 领域的绝对王者，几乎所有场景都能用它实现。但随后，LangGraph 登场了，很多人（包括我）都对这两个框架的设计理念和使用场景感到困惑。</p>
+<p>今天，我们就用举例子的方式，让你体会两者设计理念的不同，选择时不再迷茫。</p>
+<h3 id="先聊聊-LangChain：你的全能工具箱-🧰"><a href="#先聊聊-LangChain：你的全能工具箱-🧰" class="headerlink" title="先聊聊 LangChain：你的全能工具箱 🧰"></a>先聊聊 LangChain：你的全能工具箱 🧰</h3><p>你可以把 LangChain.js 想象成一个<strong>超级豪华的乐高工具箱</strong>。</p>
+<p><strong>它的设计哲学是：</strong> “我为你提供所有必需的零件——模型接口、提示词模板、外部工具……你则像一个装配工，将它们‘咔嚓’一下拼接起来，一个任务流就完成了。”</p>
+<p>它极其适合处理那种“一条道走到黑”的线性任务。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>上手神速：</strong> 对于简单的想法，几行代码就能跑通，堪称原型开发神器。</li>
+<li><strong>生态完备：</strong> 社区极其庞大，你想要集成的各种模型、工具，基本上都有现成的模块。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>天生“一根筋”，不会拐弯：</strong> 如果你的任务需要“如果 A 失败了，就去尝试 B，如果 B 还不行，就退回到 A”，LangChain 本身是无法原生支持这种循环的。你必须在它的外部套上一个 <code>while</code> 循环，像个操心的老妈一样时刻监督和指挥它。</li>
+</ul>
+<p><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/langchain-toolbox.png" alt="LangChain"></p>
+<h3 id="再看看-LangGraph：给你的-Agent-装个“导航大脑”-🧠"><a href="#再看看-LangGraph：给你的-Agent-装个“导航大脑”-🧠" class="headerlink" title="再看看 LangGraph：给你的 Agent 装个“导航大脑” 🧠"></a>再看看 LangGraph：给你的 Agent 装个“导航大脑” 🧠</h3><p>如果说 LangChain 是工具箱，那 LangGraph.js 就是一张<strong>自带导航和智能规划的流程图</strong>。</p>
+<p><strong>它的设计哲学是：</strong> “别急着动手！先坐下来，把你 Agent 要做的所有事、所有可能的岔路口、所有需要‘返工’的环节，都清晰地画在一张图上。图画好了，你只需按下‘启动’，它自己就知道该怎么走，哪怕撞了南墙也知道该如何回头。”</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>天生会“循环”和“决策”：</strong> 像“自我修正”、“重试”、“条件分支”这类复杂逻辑，对它来说是基本功，因为图（Graph）结构本身就支持闭环和条件跳转。</li>
+<li><strong>逻辑清晰，不易失控：</strong> Agent 每一步在做什么，下一步要去哪，在图上都一目了然。一旦出问题，你一眼就能定位到是哪个节点卡住了，调试体验极佳。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>前期准备稍显繁琐：</strong> 你需要预先定义好节点（步骤）和边（流程），把整个图的结构设计出来。对于非常简单的任务来说，这有点“杀鸡用牛刀”。</li>
+</ul>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/langgraph-progress.png" alt="LangGraph"></h2><h3 id="实战演练：让-Agent-写个笑话，不好笑就重写！"><a href="#实战演练：让-Agent-写个笑话，不好笑就重写！" class="headerlink" title="实战演练：让 Agent 写个笑话，不好笑就重写！"></a>实战演练：让 Agent 写个笑话，不好笑就重写！</h3><p>假设我们要让 Agent 写个笑话，并且<strong>如果笑话不好笑，就必须重写</strong>。看看这两种框架的“玩法”有何天壤之别。</p>
+<h4 id="LangChain-的玩法：我在场外当“监工”"><a href="#LangChain-的玩法：我在场外当“监工”" class="headerlink" title="LangChain 的玩法：我在场外当“监工”"></a>LangChain 的玩法：我在场外当“监工”</h4><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// LangChain 伪代码：我，应用代码，是总指挥</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 搞一个只会写一次笑话的 Agent</span></span><br><span class="line"><span class="keyword">const</span> jokeAgent = <span class="title function_">createJokeAgent</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 我在外面用一个 while 循环控制它</span></span><br><span class="line"><span class="keyword">let</span> isFunny = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">while</span> (!isFunny) &#123;</span><br><span class="line">	<span class="comment">// 让它干活！</span></span><br><span class="line">	<span class="keyword">const</span> aJoke = <span class="keyword">await</span> jokeAgent.<span class="title function_">run</span>(<span class="string">&quot;讲个笑话&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 我来判断它干得好不好</span></span><br><span class="line">	isFunny = <span class="keyword">await</span> <span class="title function_">checkIfJokeIsFunny</span>(aJoke);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!isFunny) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;太尬了，重来！&quot;</span>); <span class="comment">// 我来决定要不要循环</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;嗯，这个可以，收工！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>看出来了吗？</strong> LangChain Agent 本身就像一个只会执行单次任务的“工具人”。循环、判断、重试的“大脑”逻辑，完全由我们这些外部代码来承担。</p>
+<h4 id="LangGraph-的玩法：Agent-自带“自我修养”"><a href="#LangGraph-的玩法：Agent-自带“自我修养”" class="headerlink" title="LangGraph 的玩法：Agent 自带“自我修养”"></a>LangGraph 的玩法：Agent 自带“自我修养”</h4><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// LangGraph 伪代码：图自己就是总指挥</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 先定义好两个工作站（节点）</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">writeJokeNode</span>(<span class="params">state</span>) &#123;</span><br><span class="line">	<span class="comment">/* ...写笑话... */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">judgeJokeNode</span>(<span class="params">state</span>) &#123;</span><br><span class="line">	<span class="comment">/* ...判断好不好笑... */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 画一张流程图</span></span><br><span class="line"><span class="keyword">const</span> jokeWorkflow = <span class="keyword">new</span> <span class="title class_">Graph</span>();</span><br><span class="line">jokeWorkflow.<span class="title function_">addNode</span>(<span class="string">&quot;writer&quot;</span>, writeJokeNode); <span class="comment">// “写作站”</span></span><br><span class="line">jokeWorkflow.<span class="title function_">addNode</span>(<span class="string">&quot;judge&quot;</span>, judgeJokeNode); <span class="comment">// “评审站”</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 规定好流水线方向</span></span><br><span class="line">jokeWorkflow.<span class="title function_">setEntryPoint</span>(<span class="string">&quot;writer&quot;</span>); <span class="comment">// 从“写作站”开始</span></span><br><span class="line">jokeWorkflow.<span class="title function_">addEdge</span>(<span class="string">&quot;writer&quot;</span>, <span class="string">&quot;judge&quot;</span>); <span class="comment">// 写完送到“评审站”</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 这就是魔法！设置一个“岔路口”</span></span><br><span class="line">jokeWorkflow.<span class="title function_">addConditionalEdge</span>(<span class="string">&quot;judge&quot;</span>, <span class="function">(<span class="params">state</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (state.<span class="property">isFunny</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="variable constant_">END</span>; <span class="comment">// 好笑？下班！</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;writer&quot;</span>; <span class="comment">// 不好笑？打回去重写！这就形成了循环</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 启动这条全自动流水线</span></span><br><span class="line"><span class="keyword">const</span> app = jokeWorkflow.<span class="title function_">compile</span>();</span><br><span class="line"><span class="keyword">await</span> app.<span class="title function_">invoke</span>(&#123; <span class="attr">input</span>: <span class="string">&quot;start&quot;</span> &#125;); <span class="comment">// 喊一嗓子“开工”，然后就不用管了</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>感受到这种“自治”的魅力了吗？</strong> 我们不再是那个手把手指挥的“监工”，而更像一个设计了自动化工厂流水线的“架构师”。整个“重写”的循环是在 Agent <strong>内部</strong>自动完成的。它从一个被动的“工具”，进化成了一个自主的“员工”。</p>
+<hr>
+<h3 id="结论：我该怎么选？一张图看懂"><a href="#结论：我该怎么选？一张图看懂" class="headerlink" title="结论：我该怎么选？一张图看懂"></a>结论：我该怎么选？一张图看懂</h3><p>一句话总结：</p>
+<ul>
+<li><strong>选 LangChain.js：</strong> 如果你的任务像<strong>一条直线</strong>（例如：获取数据 -&gt; 总结内容 -&gt; 输出结果），或者你只是想快速验证一个想法。它简单、直接、高效。</li>
+<li><strong>选 LangGraph.js：</strong> 如果你的任务像个<strong>带岔路的迷宫</strong>（例如：写代码 -&gt; 运行测试 -&gt; 若不通过则调试 -&gt; 再测试），需要 Agent 具备规划、反思和自我修正的复杂能力。</li>
+</ul>
+<p>回到我最初的项目，虽然初期可能用不到太复杂的流程，但考虑到未来我要做的是一个多功能的 Electron 桌面 Agent，它很可能需要处理各种复杂的工作流。为了让它变得更“聪明”、更有韧性，从一开始就采用 LangGraph 的图状思维来构建，无疑是一个更具前瞻性、也更省心的选择。</p>
+<p>希望这篇文章能帮你拨开迷雾，为你的下一个 AI Agent 项目做出最明智的选择！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://BowieHe.github.io">Bowie</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://bowiehe.github.io/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/">https://bowiehe.github.io/2025/08/05/Langchain-Langgraph选择/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://BowieHe.github.io" target="_blank">小何的岛🏝️</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LangGraph/">LangGraph</a></div><div class="post-share"><div class="social-share" data-image="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/07/25/Agent%E5%BC%80%E5%8F%91%E7%97%9B%E7%82%B9%EF%BC%9A%E9%95%BF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E2%80%9C%E6%BB%9A%E5%8A%A8%E6%91%98%E8%A6%81%E2%80%9D/" title="Agent开发痛点：长上下文与“滚动摘要”"><img class="cover" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/langgraph-cover.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-25</div><div class="info-item-2">Agent开发痛点：长上下文与“滚动摘要”</div></div><div class="info-2"><div class="info-item-1">Agent对话长易卡死，源于“长上下文悖论”。破局之道：引入“滚动摘要”架构，仅处理增量信息。实现无限对话，高效经济，彻底解决LLM上下文超限问题。</div></div></div></a><a class="pagination-related" href="/2025/09/10/DeepAgent%E6%BA%90%E7%A0%81%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" title="DeepAgent源码流程解读"><img class="cover" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/DeepAgent-summary.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-10</div><div class="info-item-2">DeepAgent源码流程解读</div></div><div class="info-2"><div class="info-item-1">深探DeepAgent的源码实现，揭示其如何包装LangGraph的创建反应智能体，提供更可控的任务执行框架。</div></div></div></a><a class="pagination-related" href="/2025/07/17/%E4%BB%8E%E5%BA%95%E5%B1%82%E5%AE%9E%E8%B7%B5%E5%87%BA%E5%8F%91-%EF%BC%9A%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8E-LangGraph-%E5%BC%80%E5%8F%91-AI-Agent-%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="从底层实践出发 ：一次关于 LangGraph 开发 AI Agent 的经验总结"><img class="cover" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/ChatGPT%20Image%20Jul%2017%2C%202025%2C%2012_44_49%20PM.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-17</div><div class="info-item-2">从底层实践出发 ：一次关于 LangGraph 开发 AI Agent 的经验总结</div></div><div class="info-2"><div class="info-item-1">LangGraph开发心得</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Bowie</div><div class="author-info-description">前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/BowieHe"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/BowieHe" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:hbw234@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来我的岛上和我一起冲浪</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E7%AD%9B%E9%80%89%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF-LlamaIndex-%E5%92%8C-AutoGen%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">初步筛选：为什么不是 LlamaIndex 和 AutoGen？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LlamaIndex"><span class="toc-number">1.1.</span> <span class="toc-text">LlamaIndex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AutoGen-Microsoft"><span class="toc-number">1.2.</span> <span class="toc-text">AutoGen (Microsoft)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A7%92%E7%99%BB%E5%9C%BA%EF%BC%9ALangGraph-%E4%B8%8E-LangChain-%E7%9A%84%E7%BB%88%E6%9E%81%E5%AF%B9%E5%86%B3"><span class="toc-number">2.1.</span> <span class="toc-text">主角登场：LangGraph 与 LangChain 的终极对决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E8%81%8A%E8%81%8A-LangChain%EF%BC%9A%E4%BD%A0%E7%9A%84%E5%85%A8%E8%83%BD%E5%B7%A5%E5%85%B7%E7%AE%B1-%F0%9F%A7%B0"><span class="toc-number">2.2.</span> <span class="toc-text">先聊聊 LangChain：你的全能工具箱 🧰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8B%E7%9C%8B-LangGraph%EF%BC%9A%E7%BB%99%E4%BD%A0%E7%9A%84-Agent-%E8%A3%85%E4%B8%AA%E2%80%9C%E5%AF%BC%E8%88%AA%E5%A4%A7%E8%84%91%E2%80%9D-%F0%9F%A7%A0"><span class="toc-number">2.3.</span> <span class="toc-text">再看看 LangGraph：给你的 Agent 装个“导航大脑” 🧠</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">3.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83%EF%BC%9A%E8%AE%A9-Agent-%E5%86%99%E4%B8%AA%E7%AC%91%E8%AF%9D%EF%BC%8C%E4%B8%8D%E5%A5%BD%E7%AC%91%E5%B0%B1%E9%87%8D%E5%86%99%EF%BC%81"><span class="toc-number">3.1.</span> <span class="toc-text">实战演练：让 Agent 写个笑话，不好笑就重写！</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LangChain-%E7%9A%84%E7%8E%A9%E6%B3%95%EF%BC%9A%E6%88%91%E5%9C%A8%E5%9C%BA%E5%A4%96%E5%BD%93%E2%80%9C%E7%9B%91%E5%B7%A5%E2%80%9D"><span class="toc-number">3.1.1.</span> <span class="toc-text">LangChain 的玩法：我在场外当“监工”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LangGraph-%E7%9A%84%E7%8E%A9%E6%B3%95%EF%BC%9AAgent-%E8%87%AA%E5%B8%A6%E2%80%9C%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB%E2%80%9D"><span class="toc-number">3.1.2.</span> <span class="toc-text">LangGraph 的玩法：Agent 自带“自我修养”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA%EF%BC%9A%E6%88%91%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F%E4%B8%80%E5%BC%A0%E5%9B%BE%E7%9C%8B%E6%87%82"><span class="toc-number">3.2.</span> <span class="toc-text">结论：我该怎么选？一张图看懂</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/10/10/%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84%E5%85%A8%E7%BA%AA%E5%BD%95%EF%BC%9A%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%E5%92%8C%E9%85%8D%E7%BD%AE%E9%99%B7%E9%98%B1/" title="EMR-Serverless架构重构纪录：版本冲突和配置陷阱"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/spark-error-worry.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EMR-Serverless架构重构纪录：版本冲突和配置陷阱"/></a><div class="content"><a class="title" href="/2025/10/10/%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84%E5%85%A8%E7%BA%AA%E5%BD%95%EF%BC%9A%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%E5%92%8C%E9%85%8D%E7%BD%AE%E9%99%B7%E9%98%B1/" title="EMR-Serverless架构重构纪录：版本冲突和配置陷阱">EMR-Serverless架构重构纪录：版本冲突和配置陷阱</a><time datetime="2025-10-10T05:46:53.000Z" title="发表于 2025-10-10 13:46:53">2025-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/14/%E5%BB%BA%E8%AE%AE/" title="Claude 官方的 Prompt Engineer 建议"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/prompt_ending.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Claude 官方的 Prompt Engineer 建议"/></a><div class="content"><a class="title" href="/2025/09/14/%E5%BB%BA%E8%AE%AE/" title="Claude 官方的 Prompt Engineer 建议">Claude 官方的 Prompt Engineer 建议</a><time datetime="2025-09-14T07:47:56.000Z" title="发表于 2025-09-14 15:47:56">2025-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/10/DeepAgent%E6%BA%90%E7%A0%81%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" title="DeepAgent源码流程解读"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/DeepAgent-summary.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepAgent源码流程解读"/></a><div class="content"><a class="title" href="/2025/09/10/DeepAgent%E6%BA%90%E7%A0%81%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" title="DeepAgent源码流程解读">DeepAgent源码流程解读</a><time datetime="2025-09-10T09:23:25.000Z" title="发表于 2025-09-10 17:23:25">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/" title="LangGraph vs. LangChain：怎么选"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LangGraph vs. LangChain：怎么选"/></a><div class="content"><a class="title" href="/2025/08/05/Langchain-Langgraph%E9%80%89%E6%8B%A9/" title="LangGraph vs. LangChain：怎么选">LangGraph vs. LangChain：怎么选</a><time datetime="2025-08-05T05:56:04.000Z" title="发表于 2025-08-05 13:56:04">2025-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/07/25/Agent%E5%BC%80%E5%8F%91%E7%97%9B%E7%82%B9%EF%BC%9A%E9%95%BF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E2%80%9C%E6%BB%9A%E5%8A%A8%E6%91%98%E8%A6%81%E2%80%9D/" title="Agent开发痛点：长上下文与“滚动摘要”"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/langgraph-cover.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Agent开发痛点：长上下文与“滚动摘要”"/></a><div class="content"><a class="title" href="/2025/07/25/Agent%E5%BC%80%E5%8F%91%E7%97%9B%E7%82%B9%EF%BC%9A%E9%95%BF%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E2%80%9C%E6%BB%9A%E5%8A%A8%E6%91%98%E8%A6%81%E2%80%9D/" title="Agent开发痛点：长上下文与“滚动摘要”">Agent开发痛点：长上下文与“滚动摘要”</a><time datetime="2025-07-25T03:02:44.000Z" title="发表于 2025-07-25 11:02:44">2025-07-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/4863ed8b-895d-41ca-9b61-e4c9ed36877a.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By Bowie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
