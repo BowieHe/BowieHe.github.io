@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流 | 小何的岛🏝️</title><meta name="author" content="Bowie"><meta name="copyright" content="Bowie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="为什么你的AI搜索总是&quot;笨笨的&quot;？试试autoResearch思维：不给轨道给宪法，让AI学会反思、剪枝和停止，真正做到&quot;用算力换取认知深度&quot;。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流">
+<meta property="og:url" content="https://bowiehe.github.io/2026/03/30/autoResearch/index.html">
+<meta property="og:site_name" content="小何的岛🏝️">
+<meta property="og:description" content="为什么你的AI搜索总是&quot;笨笨的&quot;？试试autoResearch思维：不给轨道给宪法，让AI学会反思、剪枝和停止，真正做到&quot;用算力换取认知深度&quot;。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png">
+<meta property="article:published_time" content="2026-03-30T13:55:35.000Z">
+<meta property="article:modified_time" content="2026-03-30T13:55:35.000Z">
+<meta property="article:author" content="Bowie">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="工作流">
+<meta property="article:tag" content="智能体">
+<meta property="article:tag" content="架构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流",
+  "url": "https://bowiehe.github.io/2026/03/30/autoResearch/",
+  "image": "https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png",
+  "datePublished": "2026-03-30T13:55:35.000Z",
+  "dateModified": "2026-03-30T13:55:35.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Bowie",
+      "url": "https://bowiehe.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://bowiehe.github.io/2026/03/30/autoResearch/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/universe.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://open.spotify.com/user/18a03f4g3srgo2hvmazmqid7k"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://movie.douban.com/people/84281410/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">小何的岛🏝️</span></a><a class="nav-page-title" href="/"><span class="site-name">告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://open.spotify.com/user/18a03f4g3srgo2hvmazmqid7k"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://movie.douban.com/people/84281410/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-30T13:55:35.000Z" title="发表于 2026-03-30 21:55:35">2026-03-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-30T13:55:35.000Z" title="更新于 2026-03-30 21:55:35">2026-03-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/LLM/">LLM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>过去这一年，AI 智能体（Agent）的概念火遍全网。但不知你有没有发现：<strong>很多所谓的 “智能体”，其实并不怎么智能。</strong></p>
+<p>它们像是一台台精密但呆板的机器，严格按照预设的轨道运行，一旦遇到意外就束手无策。今天，我想和你聊一种不同的思路——<strong>autoResearch（自主探究）</strong>，它可能是让 AI 真正 “长脑子” 的关键。</p>
+<hr>
+<h2 id="一、为什么现在的-AI-工作流往往显得很-“笨”？"><a href="#一、为什么现在的-AI-工作流往往显得很-“笨”？" class="headerlink" title="一、为什么现在的 AI 工作流往往显得很 “笨”？"></a>一、为什么现在的 AI 工作流往往显得很 “笨”？</h2><h3 id="轨道列车-vs-自动驾驶"><a href="#轨道列车-vs-自动驾驶" class="headerlink" title="轨道列车 vs 自动驾驶"></a>轨道列车 vs 自动驾驶</h3><p>想象两个场景：</p>
+<p><strong>场景 A：轨道列车</strong></p>
+<p>你铺设了一条精密的铁轨，列车沿着轨道呼啸前行。只要铁轨铺得好，列车又快又稳。但如果轨道上突然出现一块石头怎么办？答案是：列车只能停下，或者翻车。</p>
+<p>这就是<strong>传统 AI 工作流</strong>的真实写照。开发者需要预先定义好每一步该做什么：先提取关键词，再调用搜索引擎，然后总结摘要……<strong>流程是死的，规则是硬的。</strong></p>
+<p><strong>场景 B：自动驾驶</strong></p>
+<p>你给汽车设定一个目的地和基本交通规则，然后让它自己上路。遇到红灯会停，看到行人会减速，前方堵车会换路。</p>
+<p>这就是我们要追求的 <strong>autoResearch 模式</strong>——只给目标，不给死板的步骤；只定宪法，不铺轨道。</p>
+<p><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E8%BD%A8%E9%81%93%E5%88%97%E8%BD%A6vs%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6.png" alt="轨道列车 vs 自动驾驶"></p>
+<h3 id="现实世界的尴尬"><a href="#现实世界的尴尬" class="headerlink" title="现实世界的尴尬"></a>现实世界的尴尬</h3><p>在实际业务中，”轨道列车” 式的智能体常常闹笑话：</p>
+<ul>
+<li>客服机器人面对用户的 “灵魂追问” 开始车轱辘话来回说</li>
+<li>搜索 Agent 为了找一个答案，疯狂抓取几十篇网页，最后总结出一堆废话</li>
+<li>合规审查系统按照固定规则扫描，却被各种 “变形” 的违规内容轻松绕过</li>
+</ul>
+<p><strong>问题的本质在于：规则永远无法穷尽现实世界的复杂性。</strong></p>
+<hr>
+<h2 id="二、核心概念：autoResearch-到底是什么？"><a href="#二、核心概念：autoResearch-到底是什么？" class="headerlink" title="二、核心概念：autoResearch 到底是什么？"></a>二、核心概念：autoResearch 到底是什么？</h2><h3 id="无头苍蝇-vs-带脑子的大侦探"><a href="#无头苍蝇-vs-带脑子的大侦探" class="headerlink" title="无头苍蝇 vs 带脑子的大侦探"></a>无头苍蝇 vs 带脑子的大侦探</h3><p><strong>暴力搜索像一台无头苍蝇式的扫地机器人</strong>：它不管前面是墙还是家具，撞到了就弹开，换个方向继续撞。哪怕同一个地方已经撞了十几次——因为它<strong>没有记忆，没有反思，没有策略</strong>。</p>
+<p><strong>autoResearch 则像一位带脑子的大侦探</strong>：</p>
+<ul>
+<li>接到案件后，先画一张 “侦查地图”，推测线索可能藏在哪儿</li>
+<li>走访了一个嫌疑人后发现线索断了，不会傻乎乎地继续追问，而是<strong>果断换方向</strong></li>
+<li>发现某个来源全是假消息，会<strong>主动拉黑</strong>，不再浪费时间</li>
+<li>当多个独立信源的证词相互印证时，知道**”案子破了，该收工了”**</li>
+</ul>
+<p>这就是 autoResearch 的核心：<strong>反思（Reflection）+ 启发式剪枝 + 知道何时停止</strong>。</p>
+<p><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png" alt="无头苍蝇 vs 带脑子的大侦探"></p>
+<h3 id="与常规-DeepAgent-的区别"><a href="#与常规-DeepAgent-的区别" class="headerlink" title="与常规 DeepAgent 的区别"></a>与常规 DeepAgent 的区别</h3><p>市面上常见的 DeepAgent 往往采用简单的 “计划-执行” 循环：制定计划 → 执行搜索 → 检查不够 → 回到第一步。</p>
+<p>这种模式<strong>缺乏质量把控和退出机制</strong>。Agent 很容易陷入 “为了搜索而搜索” 的怪圈。</p>
+<p>autoResearch 引入了科学界的 <strong>“同行评审（Peer Review）”</strong> 机制：</p>
+<ul>
+<li><strong>Researcher（研究员）</strong>：负责搜索和收集信息</li>
+<li><strong>Critic（审稿人）</strong>：负责质疑、验证、打分</li>
+<li><strong>终止条件</strong>：当新信息不再提供增量价值，或多源交叉验证达到极高置信度时，<strong>优雅地结束任务</strong></li>
+</ul>
+<p>打个比方：常规 DeepAgent 像是一个没有预算限制的研究项目；而 autoResearch 像是一个有严格审稿流程的学术期刊，<strong>知道什么时候该发刊，什么时候该拒稿</strong>。</p>
+<hr>
+<h2 id="三、实战场景：用-autoResearch-重构-Deep-Research"><a href="#三、实战场景：用-autoResearch-重构-Deep-Research" class="headerlink" title="三、实战场景：用 autoResearch 重构 Deep Research"></a>三、实战场景：用 autoResearch 重构 Deep Research</h2><p>传统的 Deep Research 工作流通常是线性的循环：生成关键词 → 搜索引擎 → 抓取网页 → 总结 → 检查是否完整 → 不完整则继续搜索。</p>
+<p>这种模式的致命弱点在于 <strong>“盲目试错”和”缺乏反思”</strong>。它很容易陷入死循环（不断搜索相似的关键词），或者被 SEO 垃圾内容带偏，浪费大量 Token。</p>
+<h3 id="传统-Deep-Research-的困境"><a href="#传统-Deep-Research-的困境" class="headerlink" title="传统 Deep Research 的困境"></a>传统 Deep Research 的困境</h3><p>假设你要研究 “2024 年全球电动车电池技术突破”：</p>
+<p><strong>传统做法</strong>：给定关键词（”电动车电池 2024 突破”），让 Agent 循环搜索直到 token 耗尽。</p>
+<p><strong>结果往往是</strong>：</p>
+<ul>
+<li>前 3 轮还能抓到一些有价值的资讯</li>
+<li>第 4-5 轮开始重复抓取相似内容</li>
+<li>第 6 轮以后，搜到的全是 SEO 垃圾站和营销号文章</li>
+<li>最终总结出一篇 “正确的废话” 集合</li>
+</ul>
+<p>这就像是一个<strong>没有分辨能力的资料收集员</strong>，只要是纸就往包里塞，最后包满了，但有用信息却没几条。</p>
+<h3 id="autoResearch-的优化思路"><a href="#autoResearch-的优化思路" class="headerlink" title="autoResearch 的优化思路"></a>autoResearch 的优化思路</h3><p>用 autoResearch（即”科学研究”的思路）来优化，我们需要把流程升级为：<strong>全局规划 → 提出搜索假设 → 执行验证 → 批判反思 → 动态调整</strong>。</p>
+<p><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="工作流程图"></p>
+<p><strong>第一步：从”生成关键词”到”构建研究大纲”</strong></p>
+<p>传统做法是直接让大模型想几个搜索词。在 autoResearch 中，第一步必须是<strong>全局视角的拆解</strong>。</p>
+<p>引入一个 <strong>Planner Agent</strong>，它接收用户的原始问题，不立刻搜索，而是输出一个结构化的”研究大纲”：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">基于已有知识，推测答案可能藏在：</span><br><span class="line">- 宁德时代、比亚迪等头部厂商的官方技术白皮书</span><br><span class="line">- IEEE、Nature 等期刊的 2024 年论文</span><br><span class="line">- 各大车企（特斯拉、大众、丰田）的财报电话会议记录</span><br><span class="line">- 中国和欧盟的新能源汽车政策文件</span><br></pre></td></tr></table></figure>
+
+<p>这就像大侦探<strong>在办公室里画一张 “线索热力图”</strong>——哪儿最可能藏线索，就往哪儿投入精力。</p>
+<p><strong>第二步：提出假设与定向探索</strong></p>
+<p>传统流程是无脑调用搜索引擎。autoResearch 要求在搜索前建立**”假设”**。</p>
+<p>针对大纲中的子问题，Researcher Agent 需要推理出去哪里找、用什么策略找：</p>
+<blockquote>
+<p>“要找技术突破的具体数据，假设这不在普通新闻里，而在技术白皮书或学术论文中。”</p>
+</blockquote>
+<p>于是 Agent 生成<strong>带有高级搜索语法的请求</strong>：</p>
+<ul>
+<li>从：<code>电动车电池 2024 突破</code></li>
+<li>到：<code>solid-state battery breakthrough 2024 &quot;energy density&quot;</code></li>
+<li>到：<code>宁德时代 凝聚态电池 技术白皮书 filetype:pdf</code></li>
+</ul>
+<p><strong>第三步：引入强硬的”文献评审与批判机制”</strong></p>
+<p>这是区别于普通工作流的关键。抓取到内容后，<strong>不能直接汇总</strong>，必须过 Critic 这一关：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>信源可信度</td>
+<td>这是官方文件、学术期刊，还是营销号？</td>
+</tr>
+<tr>
+<td>信息新鲜度</td>
+<td>发布时间是 2024 年吗？还是陈年旧闻？</td>
+</tr>
+<tr>
+<td>内容相关性</td>
+<td>具体讲了技术突破，还是泛泛而谈？</td>
+</tr>
+<tr>
+<td>增量价值</td>
+<td>这条信息之前见过吗？有重复吗？</td>
+</tr>
+</tbody></table>
+<p>如果被判为 “低质量” 或 “重复信息”，Critic 会给出反馈：</p>
+<blockquote>
+<p>“这篇内容来自某自媒体，信源可信度低，且与已收集的第 3、7 条信息高度重复。建议：1）拉黑该域名；2）转向搜索 ‘solid-state battery 2024 IEEE’ 获取更权威来源。”</p>
+</blockquote>
+<p><strong>第四步：动态记忆与”认知白板”管理</strong></p>
+<p>在多次迭代中，系统必须维持一个清晰的**”认知状态”**：</p>
+<ul>
+<li><strong>known_facts</strong>：已确认的事实（移入此区）</li>
+<li><strong>information_gaps</strong>：待解之谜（根据新发现衍生出新问题）</li>
+<li><strong>dead_ends</strong>：死胡同（”搜索某关键词前 3 页全是广告，此方向已死，不再尝试”）</li>
+</ul>
+<p>这就像侦探的<strong>案件墙</strong>——已证实的贴绿标签，待调查的贴红标签，已排除的贴灰标签。</p>
+<p><strong>第五步：动态终止条件（最难的一环）</strong></p>
+<p>在实际落地中，<strong>最难控制的不是”死循环”，而是很难让 LLM 准确判断”信息是否已经找全了”</strong>。</p>
+<p>死循环其实工程上比较好控：query 去重、source 去重、failed path 记忆、连续低增量停止……这些都是字符串匹配层面的问题。</p>
+<p>但”是否找全”很难，因为它本质上是<strong>认知判断</strong>，不是字符串匹配。</p>
+<p>所以更好的思路是：<strong>不要追求”完备性”，而是追求”回答充分性”</strong>。</p>
+<p>不是问”我是否找全了所有信息”，而是问”关键 information_gaps 是否已被覆盖到足以回答用户问题”。</p>
+<p>具体指标：</p>
+<ol>
+<li><strong>信息熵阈值</strong>：连续 3 轮搜索的新信息重复率超过 80%，说明已接近信息边界</li>
+<li><strong>置信度阈值</strong>：关键结论已有 3 个以上独立信源交叉验证</li>
+<li><strong>Gap 覆盖度</strong>：核心的 information_gaps 已被填满，或判定剩余问题”在当前公开信息中极大概率不存在”</li>
+</ol>
+<p><strong>边界的控制，需要绝对明确的指标</strong>。这也是为什么 autoResearch 更适合有明确答案边界的问题（如”2024年电池技术突破”），而不适合开放式探索（如”未来十年AI发展趋势”）。后者缺乏清晰的终止信号，容易陷入”为了全面而全面”的泥潭。</p>
+<p><strong>结果对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统 DeepAgent</th>
+<th>autoResearch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索轮次</td>
+<td>10+ 轮</td>
+<td>4-5 轮</td>
+</tr>
+<tr>
+<td>抓取网页数</td>
+<td>50+ 篇</td>
+<td>15-20 篇</td>
+</tr>
+<tr>
+<td>有效信息率</td>
+<td>~20%</td>
+<td>~70%</td>
+</tr>
+<tr>
+<td>Token 消耗</td>
+<td>高</td>
+<td>低 30-50%</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="附：核心-Prompt-设计示例"><a href="#附：核心-Prompt-设计示例" class="headerlink" title="附：核心 Prompt 设计示例"></a>附：核心 Prompt 设计示例</h3><p>autoResearch 的效果很大程度上取决于 Prompt 设计。以下是三个核心角色的 System Prompt 框架：</p>
+<p><strong>1. 宪法（North Star）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">你是Research Team的协调者。你的目标只有一个：</span><br><span class="line">确保团队找到能够回答用户问题的、来自权威信源的、</span><br><span class="line">相互独立验证的充分证据，并用清晰的逻辑呈现结论。</span><br><span class="line"></span><br><span class="line">你不参与具体搜索，但你决定：</span><br><span class="line">- 什么时候信息已经足够（终止条件）</span><br><span class="line">- 什么时候需要调整方向（策略修正）</span><br><span class="line">- 什么信源可以信任（白名单/黑名单管理）</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. Researcher（研究员）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">你是研究员。你的任务是搜索信息并撰写报告。</span><br><span class="line"></span><br><span class="line">工作流程：</span><br><span class="line">1. 接收研究方向和待验证的假设</span><br><span class="line">2. 使用搜索工具获取相关网页/PDF</span><br><span class="line">3. 提取关键信息，标注来源URL和发布时间</span><br><span class="line">4. 将发现提交给Critic评审</span><br><span class="line"></span><br><span class="line">约束：</span><br><span class="line">- 同一轮次内不要重复搜索相似关键词</span><br><span class="line">- 优先选择.gov/.edu/知名媒体/官方渠道</span><br><span class="line">- 每个结论必须附带来源</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. Critic（审稿人）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">你是严格的审稿人。你的任务是对Researcher的发现进行质疑和验证。</span><br><span class="line"></span><br><span class="line">评审清单（必须逐项检查）：</span><br><span class="line">□ 信源可信度：官方？学术？还是自媒体？</span><br><span class="line">□ 信息时效性：是否过时？</span><br><span class="line">□ 内容相关性：是否切题？还是标题党？</span><br><span class="line">□ 增量价值：与已有信息是否重复？</span><br><span class="line">□ 逻辑一致性：是否存在矛盾或夸大？</span><br><span class="line"></span><br><span class="line">输出格式：</span><br><span class="line">- 评分：0-10分</span><br><span class="line">- 通过/不通过</span><br><span class="line">- 具体意见（如有不通过，给出改进建议）</span><br><span class="line">- 建议的下一步动作（换关键词/换信源/深入追问）</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键设计原则</strong>：</p>
+<ul>
+<li><strong>宪法只定目标不定方法</strong>：不说 “去搜 IEEE”，而说 “找权威技术来源”</li>
+<li><strong>Critic 必须有否决权</strong>：如果评审不通过，Researcher 必须重新搜索</li>
+<li><strong>明确的终止信号</strong>：当 Critic 连续 3 次给出 “信息重复” 评价时，触发终止流程</li>
+</ul>
+<hr>
+<h2 id="四、autoResearch-的灵魂：三大支柱"><a href="#四、autoResearch-的灵魂：三大支柱" class="headerlink" title="四、autoResearch 的灵魂：三大支柱"></a>四、autoResearch 的灵魂：三大支柱</h2><p><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E4%B8%89%E5%A4%A7%E6%94%AF%E6%9F%B1.png" alt="三大支柱"></p>
+<h3 id="1-宪法目标（North-Star）"><a href="#1-宪法目标（North-Star）" class="headerlink" title="1. 宪法目标（North Star）"></a>1. 宪法目标（North Star）</h3><p>不是告诉 AI “怎么做”，而是告诉它 “做到什么样算成功”。</p>
+<p>比如对于搜索任务，宪法可以是：</p>
+<blockquote>
+<p>“找到能够回答用户问题的、来自权威信源的、相互独立验证的充分证据，并用清晰的逻辑呈现结论。”</p>
+</blockquote>
+<p>这就像是给自动驾驶汽车设定的目的地和安全准则——<strong>路你自己选，但目的地必须到，红灯必须停</strong>。</p>
+<h3 id="2-对抗评审机制（Actor-Critic）"><a href="#2-对抗评审机制（Actor-Critic）" class="headerlink" title="2. 对抗评审机制（Actor-Critic）"></a>2. 对抗评审机制（Actor-Critic）</h3><p>不要只有一个执行者，要有一个 “挑刺者”。</p>
+<ul>
+<li><strong>Actor（执行者）</strong>：负责行动（搜索、抓取、分析）</li>
+<li><strong>Critic（批判者）</strong>：负责质疑（信源可靠吗？逻辑通吗？有遗漏吗？）</li>
+</ul>
+<p>这种 “红蓝对抗” 的设计，让系统具备了<strong>自我纠错能力</strong>。</p>
+<h3 id="3-动态经验记忆（Learning-from-History）"><a href="#3-动态经验记忆（Learning-from-History）" class="headerlink" title="3. 动态经验记忆（Learning from History）"></a>3. 动态经验记忆（Learning from History）</h3><p>把每次任务的 “错题本” 存入向量数据库：</p>
+<ul>
+<li>哪些域名是垃圾站？拉黑。</li>
+<li>哪种搜索语法最有效？优先用。</li>
+<li>之前的类似任务踩过哪些坑？提前规避。</li>
+</ul>
+<p><strong>系统越用越聪明，而不是每次都从零开始。</strong></p>
+<hr>
+<h2 id="五、总结：用算力换取认知深度"><a href="#五、总结：用算力换取认知深度" class="headerlink" title="五、总结：用算力换取认知深度"></a>五、总结：用算力换取认知深度</h2><p>AI 智能体的发展正在经历一个范式转换：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>特征</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阶段 1</td>
+<td>固定规则流水线</td>
+<td>轨道列车</td>
+</tr>
+<tr>
+<td>阶段 2</td>
+<td>循环搜索 “暴力破解”</td>
+<td>无头苍蝇</td>
+</tr>
+<tr>
+<td>阶段 3</td>
+<td><strong>autoResearch 自主探究</strong></td>
+<td><strong>带脑子的大侦探</strong></td>
+</tr>
+</tbody></table>
+<p><strong>autoResearch 不是在炫耀 “我能搜多少网页”，而是在追求 “我能否用最少的动作，找到最准确的信息，并知道什么时候该停手”。</strong></p>
+<p>这背后是认知科学的一个朴素道理：<strong>智能的本质不是记忆，而是判断；不是勤奋，而是策略。</strong></p>
+<p>对于关注 AI 应用落地的产品经理、业务负责人来说，这个转变意味着：</p>
+<ul>
+<li><strong>从铺轨道到定宪法</strong>：与其花三个月写规则，不如花三周设计评价标准和终止条件</li>
+<li><strong>从单兵作战到红蓝对抗</strong>：让 AI 自己和自己较劲，比人盯人更有效</li>
+<li><strong>从一次性任务到持续进化</strong>：每一次调用都在积累 “组织记忆”</li>
+</ul>
+<p><strong>用算力换取认知深度，是未来复杂 AI 业务的必经之路。</strong></p>
+<p>毕竟，在这个信息爆炸的时代，<strong>知道搜什么、怎么搜、什么时候停</strong>，比单纯的 “能搜” 重要得多。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://BowieHe.github.io">Bowie</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://bowiehe.github.io/2026/03/30/autoResearch/">https://bowiehe.github.io/2026/03/30/autoResearch/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://BowieHe.github.io" target="_blank">小何的岛🏝️</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a><a class="post-meta__tags" href="/tags/Agent/">Agent</a><a class="post-meta__tags" href="/tags/%E6%9E%B6%E6%9E%84/">架构</a><a class="post-meta__tags" href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/">智能体</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/">工作流</a></div><div class="post-share"><div class="social-share" data-image="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/02/28/AgentTeams/" title="Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命"><img class="cover" src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/%E7%94%9F%E6%88%90%E5%AF%B9%E6%AF%94%E6%8F%92%E7%94%BB.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-28</div><div class="info-item-2">Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命</div></div><div class="info-2"><div class="info-item-1">Agent Teams的介绍以及使用场景</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/IMG_20221225_205912.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Bowie</div><div class="author-info-description">前端/后端/大数据/AI开发,记录日常所思所想,阅读感悟</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/BowieHe"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/BowieHe" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:hbw234@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来我的岛上和我一起冲浪</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E5%9C%A8%E7%9A%84-AI-%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BE%80%E5%BE%80%E6%98%BE%E5%BE%97%E5%BE%88-%E2%80%9C%E7%AC%A8%E2%80%9D%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">一、为什么现在的 AI 工作流往往显得很 “笨”？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%A8%E9%81%93%E5%88%97%E8%BD%A6-vs-%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6"><span class="toc-number">2.1.</span> <span class="toc-text">轨道列车 vs 自动驾驶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E7%9A%84%E5%B0%B4%E5%B0%AC"><span class="toc-number">2.2.</span> <span class="toc-text">现实世界的尴尬</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9AautoResearch-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">二、核心概念：autoResearch 到底是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87-vs-%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2"><span class="toc-number">3.1.</span> <span class="toc-text">无头苍蝇 vs 带脑子的大侦探</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E5%B8%B8%E8%A7%84-DeepAgent-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.2.</span> <span class="toc-text">与常规 DeepAgent 的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E6%88%98%E5%9C%BA%E6%99%AF%EF%BC%9A%E7%94%A8-autoResearch-%E9%87%8D%E6%9E%84-Deep-Research"><span class="toc-number">4.</span> <span class="toc-text">三、实战场景：用 autoResearch 重构 Deep Research</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F-Deep-Research-%E7%9A%84%E5%9B%B0%E5%A2%83"><span class="toc-number">4.1.</span> <span class="toc-text">传统 Deep Research 的困境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#autoResearch-%E7%9A%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-number">4.2.</span> <span class="toc-text">autoResearch 的优化思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E6%A0%B8%E5%BF%83-Prompt-%E8%AE%BE%E8%AE%A1%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.3.</span> <span class="toc-text">附：核心 Prompt 设计示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81autoResearch-%E7%9A%84%E7%81%B5%E9%AD%82%EF%BC%9A%E4%B8%89%E5%A4%A7%E6%94%AF%E6%9F%B1"><span class="toc-number">5.</span> <span class="toc-text">四、autoResearch 的灵魂：三大支柱</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%AA%E6%B3%95%E7%9B%AE%E6%A0%87%EF%BC%88North-Star%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">1. 宪法目标（North Star）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E6%8A%97%E8%AF%84%E5%AE%A1%E6%9C%BA%E5%88%B6%EF%BC%88Actor-Critic%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">2. 对抗评审机制（Actor-Critic）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A8%E6%80%81%E7%BB%8F%E9%AA%8C%E8%AE%B0%E5%BF%86%EF%BC%88Learning-from-History%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">3. 动态经验记忆（Learning from History）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A%E7%94%A8%E7%AE%97%E5%8A%9B%E6%8D%A2%E5%8F%96%E8%AE%A4%E7%9F%A5%E6%B7%B1%E5%BA%A6"><span class="toc-number">6.</span> <span class="toc-text">五、总结：用算力换取认知深度</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/30/autoResearch/" title="告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流"/></a><div class="content"><a class="title" href="/2026/03/30/autoResearch/" title="告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流">告别死板的流水线：用 autoResearch 思维重构 AI 智能体工作流</a><time datetime="2026-03-30T13:55:35.000Z" title="发表于 2026-03-30 21:55:35">2026-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/05/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AF%B9%E9%BE%99%E8%99%BE%E5%8E%BB%E9%AD%85/" title="龙虾体验记：从入门到放弃"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/%E9%BE%99%E8%99%BE-%E6%9C%9F%E5%BE%85%E4%B8%8E%E5%9B%B0%E6%83%91.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="龙虾体验记：从入门到放弃"/></a><div class="content"><a class="title" href="/2026/03/05/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AF%B9%E9%BE%99%E8%99%BE%E5%8E%BB%E9%AD%85/" title="龙虾体验记：从入门到放弃">龙虾体验记：从入门到放弃</a><time datetime="2026-03-05T00:20:44.000Z" title="发表于 2026-03-05 08:20:44">2026-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/02/28/AgentTeams/" title="Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/%E7%94%9F%E6%88%90%E5%AF%B9%E6%AF%94%E6%8F%92%E7%94%BB.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命"/></a><div class="content"><a class="title" href="/2026/02/28/AgentTeams/" title="Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命">Agent Teams：从&quot;单兵作战&quot;到&quot;团队协作&quot;的AI编程革命</a><time datetime="2026-02-28T00:57:25.000Z" title="发表于 2026-02-28 08:57:25">2026-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/15/%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%9A%E5%9F%BA%E4%BA%8EQdrant%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%92%8C%E6%90%9C%E7%B4%A2/" title="本地知识库：基于Qdrant的向量化和搜索"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地知识库：基于Qdrant的向量化和搜索"/></a><div class="content"><a class="title" href="/2026/01/15/%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%9A%E5%9F%BA%E4%BA%8EQdrant%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%92%8C%E6%90%9C%E7%B4%A2/" title="本地知识库：基于Qdrant的向量化和搜索">本地知识库：基于Qdrant的向量化和搜索</a><time datetime="2026-01-15T09:06:33.000Z" title="发表于 2026-01-15 17:06:33">2026-01-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/10/10/%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84%E5%85%A8%E7%BA%AA%E5%BD%95%EF%BC%9A%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%E5%92%8C%E9%85%8D%E7%BD%AE%E9%99%B7%E9%98%B1/" title="EMR-Serverless架构重构纪录：版本冲突和配置陷阱"><img src="https://blog-1321748307.cos.ap-shanghai.myqcloud.com/img/spark-error-worry.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EMR-Serverless架构重构纪录：版本冲突和配置陷阱"/></a><div class="content"><a class="title" href="/2025/10/10/%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84%E5%85%A8%E7%BA%AA%E5%BD%95%EF%BC%9A%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%E5%92%8C%E9%85%8D%E7%BD%AE%E9%99%B7%E9%98%B1/" title="EMR-Serverless架构重构纪录：版本冲突和配置陷阱">EMR-Serverless架构重构纪录：版本冲突和配置陷阱</a><time datetime="2025-10-10T05:46:53.000Z" title="发表于 2025-10-10 13:46:53">2025-10-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://blog-1321748307.cos.ap-shanghai.myqcloud.com/note/autoResearch-%E6%97%A0%E5%A4%B4%E8%8B%8D%E8%9D%87vs%E5%B8%A6%E8%84%91%E5%AD%90%E7%9A%84%E5%A4%A7%E4%BE%A6%E6%8E%A2.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By Bowie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
